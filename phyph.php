@@ -14,7 +14,7 @@ class Phyph
 {
 
     /**
-     * these characters that indicate the end/beginning of a word
+     * these characters indicate the end/beginning of a word
      * @var string
      */
     public $boundaries = "<>\t\n\r\0\x0B !\"§$%&/()=?….,;:-–_„”«»‘’'/\\‹›()[]{}*+´`^|©℗®™℠¹²³";
@@ -87,6 +87,7 @@ class Phyph
     /**
      * This method hyphenates the given text. It will be split up into words,
      * which then are hyphenated separately.
+     * It returns the hyphenated text, or the provided one, if an error occured.
      *
      * @param $text
      * @return string
