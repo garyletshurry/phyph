@@ -11,5 +11,4 @@ It is basically a fork of phpHyphenator.
 
 ## TODO
 
-- Add some/more patterns for different languages
 - The class currently just fails silently and returns the provided text
