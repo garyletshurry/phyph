@@ -3,7 +3,7 @@
 class Phyph
 {
 
-    public $boundaries = '<>\t\n\r\0\x0B !"§$%&/()=?….,;:-–_„”«»‘’\'/\\‹›()[]{}*+´`^|©℗®™℠¹²³';
+    public $boundaries = "<>\t\n\r\0\x0B !\"§$%&/()=?….,;:-–_„”«»‘’'/\\‹›()[]{}*+´`^|©℗®™℠¹²³";
     public $hyphen = '&shy;';
     public $wordmin = 8;
     public $leftmin;
@@ -19,7 +19,7 @@ class Phyph
             return false;
         }
 
-        $pattern = include "$file";
+        $pattern = include("$file");
 
         if (empty($pattern['pattern'])) {
             return false;
@@ -53,6 +53,7 @@ class Phyph
             return $text;
         }
 
+        $text .= ' ';
         $return = array();
         $word = '';
 
@@ -65,12 +66,11 @@ class Phyph
             if ($word !== '') {
                 $return[] = $this->hyphenateWord($word);
                 $word = '';
-                continue;
             }
             $return[] = $char;
         }
 
-        return join('', $return);
+        return implode('', array_slice($return, 0, -1));
     }
 
     private function hyphenateWord($word)
@@ -83,13 +83,19 @@ class Phyph
         }
 
         $matchWord = '.' . $word . '.';
-        $matchWordChars = mb_split_chars($matchWord);
+        $matchWordLength = mb_strlen($matchWord);
+
+        $matchWordChars = array();
+        for ($i = 0; $i < $matchWordLength; $i++) {
+            $matchWordChars[] = mb_substr($matchWord, $i, 1);
+        }
+
         $matchWord = mb_strtolower($matchWord);
 
         $hyphenateWord = array();
 
-        for ($position = 0, $mwl = mb_strlen($matchWord); $position < ($mwl - $this->charmin); $position++) {
-            $maxPatternLength = min($this->charmax, $mwl - $position);
+        for ($position = 0; $position < ($matchWordLength - $this->charmin); $position++) {
+            $maxPatternLength = min($this->charmax, $matchWordLength - $position);
 
             for ($patternLength = $this->charmin; $patternLength < $maxPatternLength; $patternLength++) {
 
@@ -100,7 +106,7 @@ class Phyph
                     for ($i = 0, $l = mb_strlen($pattern); $i < $l; $i++) {
                         $char = $pattern[$i];
 
-                        if (is_numeric($char)) {
+                        if (is_numeric($char) && $char < 10) {
                             $index = $i === 0 ? $position - 1 : $position + $i - $digit;
 
                             if (!isset($hyphenateWord[$index]) || $hyphenateWord[$index] !== $char) {
@@ -121,7 +127,7 @@ class Phyph
             }
         }
 
-        return implode('', trim($matchWordChars, '.'));
+        return trim(implode('', $matchWordChars), '.');
     }
 
 }
