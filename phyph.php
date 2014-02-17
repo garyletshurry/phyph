@@ -57,10 +57,10 @@ class Phyph
 		}
 
 		// if different options were provided, use them, otherwise some default values
-		$this->leftmin = isset($pattern['leftmin']) ? $pattern['leftmin'] : 2;
-		$this->rightmin = isset($pattern['rightmin']) ? $pattern['rightmin'] : 2;
-		$this->charmin = isset($pattern['charmin']) ? $pattern['charmin'] : 2;
-		$this->charmax = isset($pattern['charmax']) ? $pattern['charmax'] : 10;
+		$this->leftmin 		= isset($pattern['leftmin']) 	? $pattern['leftmin'] 	: 2;
+		$this->rightmin 	= isset($pattern['rightmin']) 	? $pattern['rightmin'] 	: 2;
+		$this->charmin 		= isset($pattern['charmin']) 	? $pattern['charmin'] 	: 2;
+		$this->charmax 		= isset($pattern['charmax']) 	? $pattern['charmax'] 	: 10;
 
 		$this->parsePattern($pattern['pattern']);
 	}
