@@ -11,4 +11,4 @@ It is basically a fork of phpHyphenator.
 
 ## TODO
 
-- The class currently just fails silently and returns the provided text
+- The class currently just fails silently and returns the provided text. Maybe I'll add some kind of error handling in the future.
